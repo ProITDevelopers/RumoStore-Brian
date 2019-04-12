@@ -1,5 +1,5 @@
 //
-//  Cadastro.swift
+//  ViewController.swift
 //  RumoStore
 //
 //  Created by  Snow on 02/04/2019.
@@ -8,15 +8,20 @@
 
 import UIKit
 
-class Cadastro: UIViewController {
+class ViewController: UIViewController {
+
+    @IBOutlet weak var campoEmail: TextFieldDesign!
+    @IBOutlet weak var campoSenha: TextFieldDesign!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
+    
 
- 
+
 
 }
+
