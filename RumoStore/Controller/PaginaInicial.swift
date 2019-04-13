@@ -18,7 +18,7 @@ class PaginaInicial: UIViewController, XMLParserDelegate {
     //MARK: DECLARACAO VARIAVEIS
 
     var noticias: NSArray = []
-    var fotos: [AnyObject] = []
+    var fotos: [String] = []
     var url: URL!
    
     
@@ -46,8 +46,16 @@ class PaginaInicial: UIViewController, XMLParserDelegate {
         let pegarDados : XmlParserManager = XmlParserManager().initWithURL(data) as! XmlParserManager
         
         // poes os dados no array
-        fotos = pegarDados.img as [AnyObject]
+        let teste = pegarDados.fdescription
+        let array = teste.components(separatedBy: "<p>")
+        let imageArray = array[0]
+        let arrayimage = imageArray.components(separatedBy: "<img src=\"")
+        let substring = arrayimage[1].dropLast(2)
+        let imagem = String(substring)
+        fotos = [imagem]
         noticias = pegarDados.feeds
+
+
         colletionview.reloadData()
     }
     
@@ -77,11 +85,11 @@ extension PaginaInicial: UICollectionViewDelegate,UICollectionViewDataSource, UI
 
 //
 //        // carrega as imagens
-//        let url = NSURL(string:fotos[indexPath.row] as! String)
-//        let data = NSData(contentsOf:url! as URL)
-//        let image = UIImage(data:data! as Data)
-//
-//        cell.fotoRumo.image = image
+        let url = NSURL(string:fotos[indexPath.row] as! String)
+        let data = NSData(contentsOf:url! as URL)
+        let image = UIImage(data:data! as Data)
+
+        cell.fotoRumo.image = image
         cell.textoRumo.text = (noticias.object(at: indexPath.row) as AnyObject).object(forKey: "title") as? String
         
         return cell

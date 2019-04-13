@@ -11,7 +11,8 @@ import UIKit
 class PaginaInicialCell: UICollectionViewCell {
     
     @IBOutlet weak var fotoRumo: UIImageView!
-    @IBOutlet weak var textoRumo: UILabel!
+
+    @IBOutlet weak var textoRumo: UITextView!
     
     
     
