@@ -33,6 +33,23 @@ class RumoWeb: UIViewController {
     }
     
     
+    
+    
+    @IBAction func sairButton(_ sender: Any) {
+        let loginPage =  self.storyboard?.instantiateViewController(withIdentifier: "login") as! ViewController
+        let appDelegate = UIApplication.shared.delegate
+        appDelegate?.window??.rootViewController = loginPage
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "loading" {
             if webview.isLoading {

@@ -12,12 +12,12 @@ import Alamofire
 
 class Cadastro: UIViewController {
     
-    // Textfields
+
     @IBOutlet weak var nome: TextFieldDesign!
     @IBOutlet weak var email: TextFieldDesign!
     @IBOutlet weak var senha: TextFieldDesign!
     @IBOutlet weak var repetirSenha: TextFieldDesign!
-
+    @IBOutlet weak var carregar: UIActivityIndicatorView!
     @IBOutlet weak var scrollview: UIScrollView!
     
     let url = "https://console.proitappsolutions.com/v1/app"
@@ -41,16 +41,25 @@ class Cadastro: UIViewController {
     
     
     func cadastrar() {
-        
-        let param = ["nomeCliente" : nome.text!,"email" :  email.text!, "password" : senha.text!] as [String : Any]
+        self.carregar.startAnimating()
+        self.carregar.isHidden = false
+        let param = ["nomeCliente" : nome.text!,"email" :  email.text!, "password" : senha.text!] as [String : String]
        
-        Alamofire.request(url, method: .post, parameters: param).responseJSON {
+        Alamofire.request(url, method: .post, parameters: param).responseString {
             response in
             
             if response.result.isSuccess {
                 print("POST OK")
+                self.carregar.stopAnimating()
+                self.mostrarMensagem(mensagem: "Cadastro Efetuado com Sucesso")
+                let loginPage =  self.storyboard?.instantiateViewController(withIdentifier: "login") as! ViewController
+                let appDelegate = UIApplication.shared.delegate
+                appDelegate?.window??.rootViewController = loginPage
+                
                 
             }else {
+                self.carregar.stopAnimating()
+                self.mostrarMensagem(mensagem: "Alguma coisa correu mal, verifique os campos ou tente novamente mais tarde!")
                 print("Error")
             }
             
@@ -59,6 +68,18 @@ class Cadastro: UIViewController {
 
   }
     
+    
+    
+    func mostrarMensagem(mensagem: String) {
+        let mensagem  = UIAlertController(title: "AVISO", message: mensagem, preferredStyle: UIAlertController.Style.alert)
+        
+        let action = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (actions) in
+            mensagem.dismiss(animated: true, completion: nil)
+        }
+        mensagem.addAction(action)
+        self.present(mensagem,animated: true, completion: nil)
+        
+    }
     
     
     
@@ -72,23 +93,19 @@ extension Cadastro: UITextFieldDelegate {
     
     //FUNCOES TEXTFIELDS
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        scrollview.setContentOffset(CGPoint(x: 0, y: 250), animated: true)
+        scrollview.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField.tag == 0
         {
-            nome.becomeFirstResponder()
-        }
-        else if textField.tag == 1 {
             email.becomeFirstResponder()
         }
-        else if textField.tag == 2 {
+        else if textField.tag == 1 {
             senha.becomeFirstResponder()
-            
         }
-        else if textField.tag == 3 {
+        else if textField.tag == 2 {
             repetirSenha.becomeFirstResponder()
             
         }
@@ -100,9 +117,7 @@ extension Cadastro: UITextFieldDelegate {
     
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        scrollview.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        
-        
+        scrollview.setContentOffset(CGPoint(x: 0, y: 0), animated: true)    
     }
     
     

@@ -59,6 +59,16 @@ class PaginaInicial: UIViewController, XMLParserDelegate {
         colletionview.reloadData()
     }
     
+    
+    @IBAction func sairButton(_ sender: Any) {
+        let loginPage =  self.storyboard?.instantiateViewController(withIdentifier: "login") as! ViewController
+        let appDelegate = UIApplication.shared.delegate
+        appDelegate?.window??.rootViewController = loginPage
+        
+    }
+    
+    
+    
   
 
 }
@@ -85,7 +95,7 @@ extension PaginaInicial: UICollectionViewDelegate,UICollectionViewDataSource, UI
 
 //
 //        // carrega as imagens
-        let url = NSURL(string:fotos[indexPath.row] as! String)
+        let url = NSURL(string:fotos[indexPath.row])
         let data = NSData(contentsOf:url! as URL)
         let image = UIImage(data:data! as Data)
 

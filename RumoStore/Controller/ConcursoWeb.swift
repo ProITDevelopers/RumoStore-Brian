@@ -25,11 +25,23 @@ class ConcursoWeb: UIViewController {
         self.revealViewController()?.rearViewRevealWidth = 305
         
         
-        let url = URL(string: "https://www.mercado.co.ao/")
+        let url = URL(string: "https://concursomediarumo.herokuapp.com")
         let request = URLRequest(url: url!)
         webview.load(request)
         webview.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
     }
+    
+    
+    @IBAction func sairButton(_ sender: Any) {
+        let loginPage =  self.storyboard?.instantiateViewController(withIdentifier: "login") as! ViewController
+        let appDelegate = UIApplication.shared.delegate
+        appDelegate?.window??.rootViewController = loginPage
+
+    }
+    
+    
+    
+    
     
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

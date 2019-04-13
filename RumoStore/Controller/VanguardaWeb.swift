@@ -14,6 +14,7 @@ class VanguardaWeb: UIViewController {
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var carregar: UIActivityIndicatorView!
     @IBOutlet weak var menuBotao: UIBarButtonItem!
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,20 @@ class VanguardaWeb: UIViewController {
         webview.load(request)
         webview.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
     }
+    
+    
+    
+    
+    @IBAction func sairButton(_ sender: Any) {
+        let loginPage =  self.storyboard?.instantiateViewController(withIdentifier: "login") as! ViewController
+        let appDelegate = UIApplication.shared.delegate
+        appDelegate?.window??.rootViewController = loginPage
+
+    }
+    
+    
+    
+    
     
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
